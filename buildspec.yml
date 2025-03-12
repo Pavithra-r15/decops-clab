@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+  pre_build:
+    commands:
+      - echo "Logging in to Docker Hub..."
+      - docker login -u "<username>" -p "<password>"
+  build:
+    commands:
+      - echo "Building the Docker image..."
+      - docker build -t node-db:latest .
+      - docker tag node-db:latest pavithrar015/clab
+  post_build:
+    commands:
+      - echo "Pushing the Docker image to Docker Hub..."
+      - docker push pavithrar015/clab:latest
+artifacts:
+  files:
+    - '**/*'
